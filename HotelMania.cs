@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Reflection;
@@ -16,13 +15,19 @@ namespace HotelMania
 	public partial class HotelMania : Form
 	{
 		public Hotel theHotel;
+
 		DateTime dummyTimeStamp = DateTime.Now;
 
         List<HotelRoom> listOfRooms = new List<HotelRoom>();
+
 		BindingList<Guest> listOfGuestsWithoutRooms = new BindingList<Guest>();
+
         BindingList<Guest> listOfGuestsWithRooms = new BindingList<Guest>();
+
 		BindingList<HotelRoom> floor1 = new BindingList<HotelRoom>();
+
 		BindingList<HotelRoom> floor2 = new BindingList<HotelRoom>();
+
 		BindingList<HotelRoom> floor3 = new BindingList<HotelRoom>();
 
 		/* Drag & Drop */

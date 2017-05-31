@@ -111,9 +111,9 @@
 			this.guestListDataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.guestListDataGrid.Size = new System.Drawing.Size(347, 483);
 			this.guestListDataGrid.TabIndex = 0;
-			this.guestListDataGrid.DragOver += new System.Windows.Forms.DragEventHandler(this.guestListDataGrid_DragOver);
-			this.guestListDataGrid.MouseDown += new System.Windows.Forms.MouseEventHandler(this.guestListDataGrid_MouseDown);
-			this.guestListDataGrid.MouseMove += new System.Windows.Forms.MouseEventHandler(this.guestListDataGrid_MouseMove);
+			//this.guestListDataGrid.DragOver += new System.Windows.Forms.DragEventHandler(this.guestListDataGrid_DragOver);
+			//this.guestListDataGrid.MouseDown += new System.Windows.Forms.MouseEventHandler(this.guestListDataGrid_MouseDown);
+			//this.guestListDataGrid.MouseMove += new System.Windows.Forms.MouseEventHandler(this.guestListDataGrid_MouseMove);
 			// 
 			// guestBindingSource
 			// 
@@ -264,7 +264,7 @@
 			this.dataGridViewFloor3.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dataGridViewFloor3.Size = new System.Drawing.Size(347, 483);
 			this.dataGridViewFloor3.TabIndex = 0;
-			this.dataGridViewFloor3.DragDrop += new System.Windows.Forms.DragEventHandler(this.dataGridViewFloor3_DragDrop);
+			//this.dataGridViewFloor3.DragDrop += new System.Windows.Forms.DragEventHandler(this.dataGridViewFloor3_DragDrop);
 			// 
 			// nameOfOccupant1
 			// 
@@ -318,7 +318,7 @@
 			this.dataGridViewFloor2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dataGridViewFloor2.Size = new System.Drawing.Size(347, 483);
 			this.dataGridViewFloor2.TabIndex = 0;
-			this.dataGridViewFloor2.DragDrop += new System.Windows.Forms.DragEventHandler(this.dataGridViewFloor2_DragDrop);
+			//this.dataGridViewFloor2.DragDrop += new System.Windows.Forms.DragEventHandler(this.dataGridViewFloor2_DragDrop);
 			// 
 			// nameOfOccupant2
 			// 
@@ -370,7 +370,7 @@
 			this.dataGridViewFloor1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dataGridViewFloor1.Size = new System.Drawing.Size(347, 483);
 			this.dataGridViewFloor1.TabIndex = 0;
-			this.dataGridViewFloor1.DragDrop += new System.Windows.Forms.DragEventHandler(this.dataGridViewFloor1_DragDrop);
+			//this.dataGridViewFloor1.DragDrop += new System.Windows.Forms.DragEventHandler(this.dataGridViewFloor1_DragDrop);
 			// 
 			// nameOfOccupant
 			// 
