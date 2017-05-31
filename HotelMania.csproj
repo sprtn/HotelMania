@@ -46,16 +46,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Floor.cs" />
+    <Compile Include="HotelElementClasses\Floor.cs" />
     <Compile Include="HotelMania.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="HotelMania.Designer.cs">
       <DependentUpon>HotelMania.cs</DependentUpon>
     </Compile>
-    <Compile Include="Guest.cs" />
-    <Compile Include="Hotel.cs" />
-    <Compile Include="HotelRoom.cs" />
+    <Compile Include="HotelElementClasses\Guest.cs" />
+    <Compile Include="HotelElementClasses\Hotel.cs" />
+    <Compile Include="HotelElementClasses\HotelRoom.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="HotelMania.resx">
