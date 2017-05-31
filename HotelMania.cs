@@ -26,8 +26,8 @@ namespace HotelMania
 		BindingList<HotelRoom> floor3 = new BindingList<HotelRoom>();
 
 		/* Drag & Drop */
-		private Rectangle dragBoxFromMouseDown;
-		private object valueFromMouseDown;
+		//private Rectangle dragBoxFromMouseDown;
+		//private object valueFromMouseDown;
 
 		int availableRoomsFloor(BindingList<HotelRoom> floor)
 		{
@@ -39,7 +39,6 @@ namespace HotelMania
 			}
 			return numOccupiedRooms;
 		}
-
 		short numTimes;
 
 		/* Constructor */
@@ -59,7 +58,7 @@ namespace HotelMania
 			dataGridViewFloor3.DataSource = floor3;
 
 			TryLoadData();
-			refreshAll();
+			refreshDataGrids();
 		}
 
         private BindingList<HotelRoom> findRightBindingList(Guest g)
@@ -155,6 +154,7 @@ namespace HotelMania
 		{
 			return tabControl.SelectedIndex;
 		}
+
 		public BindingList<HotelRoom> getCurrList()
 		{
 			switch (CurrentTab())
@@ -169,6 +169,7 @@ namespace HotelMania
                     return null;
 			}
 		}
+
 		public DataGridView getCurrDataGrid()
 		{
 			switch (CurrentTab())
@@ -184,14 +185,16 @@ namespace HotelMania
             }
 		}
 
+		/// <summary>
+		/// Adds the guest selected to the room selected.
+		/// </summary>
         private void button1_Click(object sender, EventArgs e)
         {
             if (curGuest() != null && curRoom() != null && curRoom().isNotOccupied)
             {
                 Guest g = curGuest();
                 HotelRoom h = curRoom();
-
-                // Assign room to guest and guest to room.
+				
                 h.SetOccupant(g);
                 g.AssignRoom(h);
 
@@ -199,15 +202,19 @@ namespace HotelMania
                 listOfGuestsWithRooms.Add(g);
             }
 			UpdateVisualsInDataGridViewRow();
-			refreshAll();
+			refreshDataGrids();
 		}
-
-        private void refreshAll()
+		
+        private void refreshDataGrids()
         {
             dataGridViewGuestsWithRooms.DataSource = listOfGuestsWithRooms;
             guestListDataGrid.DataSource = listOfGuestsWithoutRooms;
         }
 
+		/// <summary>
+		/// A method which calls the current datagrid selected and returns the Guest associated with the item.
+		/// </summary>
+		/// <returns> The selected Guest </returns>
         private Guest curGuest()
         {
 			try
@@ -223,6 +230,10 @@ namespace HotelMania
 			}
         }
 
+		/// <summary>
+		/// A method which calls the current Guest's room number
+		/// </summary>
+		/// <returns> The selected HotelRoom </returns>
         private HotelRoom curRoom()
         {
             if (getCurrDataGrid() != null)
@@ -234,7 +245,15 @@ namespace HotelMania
             return null;
         }
 
-        public static DataTable ToDataTable<T>(List<T> items)
+
+		/// <summary>
+		/// A method which takes the incoming list of objects and returns them as a DataTable,
+		/// courtesy of the interwebs, altered slightly.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="items"></param>
+		/// <returns></returns>
+		public static DataTable ToDataTable<T>(List<T> items)
 		{
 			DataTable dataTable = new DataTable(typeof(T).Name);
 
@@ -261,6 +280,10 @@ namespace HotelMania
 			return dataTable;
 		}
 
+		/// <summary>
+		/// Adds the input HotelRoom to the listOfRooms
+		/// </summary>
+		/// <param name="f"> HotelRoom to be placed in the list of rooms. </param>
 		private void addToList(BindingList<HotelRoom> f)
         {
             foreach (HotelRoom h in f)
@@ -280,11 +303,16 @@ namespace HotelMania
 			return null;
 		}
 
+		/// <summary>
+		/// A method for finding the BindingList<HotelRoom> by floor number
+		/// </summary>
+		/// <param name="fNo"> The number of the floor we are looking for. </param>
+		/// <returns> The relative BindingList<HotelRoom> to the fNo we get in... </returns>
 		private BindingList<HotelRoom> getFloor(int fNo)
 		{
 			switch (fNo)
 			{
-				case (0):
+				case 0:
 					return floor1;
 				case 1:
 					return floor2;
@@ -295,6 +323,9 @@ namespace HotelMania
 			}
 		}
 
+		/// <summary>
+		/// Remove the guest from his/her room.
+		/// </summary>
 		private void button3_Click(object sender, EventArgs e)
 		{
 			if (curRoom() != null && !curRoom().isNotOccupied)
@@ -310,87 +341,90 @@ namespace HotelMania
 				listOfGuestsWithRooms.Remove(g);
 			}
 			UpdateVisualsInDataGridViewRow();
-			refreshAll();
+			refreshDataGrids();
 		}
 
 		/* Drag & Drop, courtesy of https://stackoverflow.com/questions/21131157/drag-and-drop-cell-from-datagridview-to-another
 		 * Can't seem to get it to work. In stackoverflow it was used for Cell values. I dont know if this is the issue.
 		 */
 
-		private void guestListDataGrid_MouseMove(object sender, MouseEventArgs e)
-		{
-			if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
-			{
-				if (dragBoxFromMouseDown != Rectangle.Empty && !dragBoxFromMouseDown.Contains(e.X, e.Y))
-				{
-					DragDropEffects dropEffect = guestListDataGrid.DoDragDrop(valueFromMouseDown, DragDropEffects.Copy);
-				}
-			}
-		}
+		//private void guestListDataGrid_MouseMove(object sender, MouseEventArgs e)
+		//{
+		//	if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
+		//	{
+		//		if (dragBoxFromMouseDown != Rectangle.Empty && !dragBoxFromMouseDown.Contains(e.X, e.Y))
+		//		{
+		//			DragDropEffects dropEffect = guestListDataGrid.DoDragDrop(valueFromMouseDown, DragDropEffects.Copy);
+		//		}
+		//	}
+		//}
 
-		private void guestListDataGrid_MouseDown(object sender, MouseEventArgs e)
-		{
-			var hittestInfo = guestListDataGrid.HitTest(e.X, e.Y);
+		//private void guestListDataGrid_MouseDown(object sender, MouseEventArgs e)
+		//{
+		//	var hittestInfo = guestListDataGrid.HitTest(e.X, e.Y);
 
-			if (hittestInfo.RowIndex != -1 && hittestInfo.ColumnIndex != -1)
-			{
-				valueFromMouseDown = guestListDataGrid.Rows[hittestInfo.RowIndex].DataBoundItem;
-				if (valueFromMouseDown != null)
-				{       
-					Size dragSize = SystemInformation.DragSize;
-					dragBoxFromMouseDown = new Rectangle(new Point(e.X - (dragSize.Width / 2), e.Y - (dragSize.Height / 2)), dragSize);
-				}
-			} else
-				dragBoxFromMouseDown = Rectangle.Empty;
-		}
+		//	if (hittestInfo.RowIndex != -1 && hittestInfo.ColumnIndex != -1)
+		//	{
+		//		valueFromMouseDown = guestListDataGrid.Rows[hittestInfo.RowIndex].DataBoundItem;
+		//		if (valueFromMouseDown != null)
+		//		{       
+		//			Size dragSize = SystemInformation.DragSize;
+		//			dragBoxFromMouseDown = new Rectangle(new Point(e.X - (dragSize.Width / 2), e.Y - (dragSize.Height / 2)), dragSize);
+		//		}
+		//	} else
+		//		dragBoxFromMouseDown = Rectangle.Empty;
+		//}
 
-		private void guestListDataGrid_DragOver(object sender, DragEventArgs e)
-		{
-			e.Effect = DragDropEffects.Copy;
-		}
+		//private void guestListDataGrid_DragOver(object sender, DragEventArgs e)
+		//{
+		//	e.Effect = DragDropEffects.Copy;
+		//}
 
-		private void dataGridViewFloor1_DragDrop(object sender, DragEventArgs e)
-		{
-			Point clientPoint = dataGridViewFloor1.PointToClient(new Point(e.X, e.Y));
-			if (e.Effect == DragDropEffects.Copy)
-			{
-				string cellvalue = e.Data.GetData(typeof(string)) as string;
-				var hittest = dataGridViewFloor1.HitTest(clientPoint.X, clientPoint.Y);
-				if (hittest.ColumnIndex != -1
-					&& hittest.RowIndex != -1)
-					dataGridViewFloor1[hittest.ColumnIndex, hittest.RowIndex].Value = cellvalue;
-			}
-		}
+		//private void dataGridViewFloor1_DragDrop(object sender, DragEventArgs e)
+		//{
+		//	Point clientPoint = dataGridViewFloor1.PointToClient(new Point(e.X, e.Y));
+		//	if (e.Effect == DragDropEffects.Copy)
+		//	{
+		//		string cellvalue = e.Data.GetData(typeof(string)) as string;
+		//		var hittest = dataGridViewFloor1.HitTest(clientPoint.X, clientPoint.Y);
+		//		if (hittest.ColumnIndex != -1
+		//			&& hittest.RowIndex != -1)
+		//			dataGridViewFloor1[hittest.ColumnIndex, hittest.RowIndex].Value = cellvalue;
+		//	}
+		//}
 
-		private void dataGridViewFloor2_DragDrop(object sender, DragEventArgs e)
-		{
-			Point clientPoint = dataGridViewFloor2.PointToClient(new Point(e.X, e.Y));
-			if (e.Effect == DragDropEffects.Copy)
-			{
-				string cellvalue = e.Data.GetData(typeof(string)) as string;
-				var hittest = dataGridViewFloor2.HitTest(clientPoint.X, clientPoint.Y);
-				if (hittest.ColumnIndex != -1
-					&& hittest.RowIndex != -1)
-					dataGridViewFloor1[hittest.ColumnIndex, hittest.RowIndex].Value = cellvalue;
-			}
-		}
+		//private void dataGridViewFloor2_DragDrop(object sender, DragEventArgs e)
+		//{
+		//	Point clientPoint = dataGridViewFloor2.PointToClient(new Point(e.X, e.Y));
+		//	if (e.Effect == DragDropEffects.Copy)
+		//	{
+		//		string cellvalue = e.Data.GetData(typeof(string)) as string;
+		//		var hittest = dataGridViewFloor2.HitTest(clientPoint.X, clientPoint.Y);
+		//		if (hittest.ColumnIndex != -1
+		//			&& hittest.RowIndex != -1)
+		//			dataGridViewFloor1[hittest.ColumnIndex, hittest.RowIndex].Value = cellvalue;
+		//	}
+		//}
 
-		private void dataGridViewFloor3_DragDrop(object sender, DragEventArgs e)
-		{
-			Point clientPoint = dataGridViewFloor3.PointToClient(new Point(e.X, e.Y));
-			if (e.Effect == DragDropEffects.Copy)
-			{
-				string cellvalue = e.Data.GetData(typeof(string)) as string;
-				var hittest = dataGridViewFloor3.HitTest(clientPoint.X, clientPoint.Y);
-				if (hittest.ColumnIndex != -1
-					&& hittest.RowIndex != -1)
-					dataGridViewFloor1[hittest.ColumnIndex, hittest.RowIndex].Value = cellvalue;
+		//private void dataGridViewFloor3_DragDrop(object sender, DragEventArgs e)
+		//{
+		//	Point clientPoint = dataGridViewFloor3.PointToClient(new Point(e.X, e.Y));
+		//	if (e.Effect == DragDropEffects.Copy)
+		//	{
+		//		string cellvalue = e.Data.GetData(typeof(string)) as string;
+		//		var hittest = dataGridViewFloor3.HitTest(clientPoint.X, clientPoint.Y);
+		//		if (hittest.ColumnIndex != -1
+		//			&& hittest.RowIndex != -1)
+		//			dataGridViewFloor1[hittest.ColumnIndex, hittest.RowIndex].Value = cellvalue;
 
-			}
-		}
+		//	}
+		//}
 
 		/* Loading and saving to XML */
 
+		/// <summary>
+		/// Saves the current values to XML for later retrieval.
+		/// </summary>
 		private void saveData_Click(object sender, EventArgs e)
 		{
 			if (listOfRooms != null)
@@ -406,11 +440,21 @@ namespace HotelMania
 				ds.WriteXml(fs);
 		}
 
+		/// <summary>
+		/// See "TryLoadData()"
+		/// </summary>
 		private void loadData_Click(object sender, EventArgs e)
 		{
 			TryLoadData();
 		}
 
+		/// <summary>
+		/// Uses a try/catch/finally to load an xml file, if existing,
+		/// to our application. Displays a warning if no XML is found,
+		/// which will run for x seconds (static value set in the respective
+		/// method. Finally it will reset the color scheme of the datagridview
+		/// to correspond with whether the rooms are occupied or not.
+		/// </summary>
 		private void TryLoadData()
 		{
 			try
@@ -439,27 +483,42 @@ namespace HotelMania
 				listOfGuestsWithoutRooms = new BindingList<Guest>();
 			} catch (Exception xmlLoadingException)
 			{
-				displayForAFew(xmlLoadingException.Message, true);
+				displayForAFew(xmlLoadingException.Message, 5);
 			} finally
 			{
-				refreshAll();
+				refreshDataGrids();
 			}
 		}
 
-		private async void displayForAFew(string message, bool v)
+		/// <summary>
+		/// Displays the ErrorMsgLoad message with the input message
+		/// for the input amount of seconds.
+		/// </summary>
+		/// <param name="message"></param>
+		/// <param name="secondsTheMessageWillBeDisplayed"></param>
+		private async void displayForAFew(string message, float secondsTheMessageWillBeDisplayed)
 		{
 			ErrorMsgLoad.Text = message;
 			ErrorMsgLoad.Visible = true;
 
-			await Task.Delay(5000);
+			await Task.Delay((int) secondsTheMessageWillBeDisplayed * 1000);
 			ErrorMsgLoad.Visible = false;
 		}
-
+		
+		/// <summary>
+		/// Calls the method UpdateVisualsInDataGridViewRow when the 
+		/// tabControl's selected index (tab) is changed.
+		/// </summary>
 		private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			UpdateVisualsInDataGridViewRow();
 		}
 
+		/// <summary>
+		/// Updates the current DataGridView's rows background
+		/// colors depending on whether the respective HotelRooms
+		/// are occupied.
+		/// </summary>
 		private void UpdateVisualsInDataGridViewRow()
 		{
 			var curGrid = getCurrDataGrid();
